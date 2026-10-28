@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anand & Sneka | Wedding Invitation</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: {
+                            50: '#FDFBF7',
+                            100: '#F7F2EA',
+                            200: '#F3EAD9',
+                        },
+                        gold: {
+                            300: '#E5C158',
+                            400: '#D4AF37',
+                            500: '#B8860B',
+                            600: '#A67C52',
+                            700: '#8C6239',
+                        },
+                        earth: {
+                            800: '#3A322F',
+                            900: '#2C2523',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Cormorant Garamond', 'serif'],
+                        sans: ['Montserrat', 'sans-serif'],
+                        script: ['Great Vibes', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FDFBF7;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #A67C52;
+            border-radius: 3px;
+        }
+
+        /* Glassmorphism Classes */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.48);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.65);
+            box-shadow: 0 8px 32px 0 rgba(140, 98, 57, 0.08);
+        }
+
+        .glass-pill {
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+        }
+
+        /* Canvas for Falling Petals */
+        #petalCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 30;
+        }
+
+        /* Floral Corner Framing */
+        .floral-corner-tl {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 85px;
+            height: 85px;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+        .floral-corner-tr {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 85px;
+            height: 85px;
+            transform: scaleX(-1);
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        /* Ambient Background Radial Glow */
+        .bg-ambient {
+            background: radial-gradient(circle at 50% 15%, rgba(212, 175, 55, 0.15) 0%, rgba(253, 251, 247, 0) 65%),
+                        radial-gradient(circle at 80% 80%, rgba(166, 124, 82, 0.1) 0%, rgba(253, 251, 247, 0) 60%),
+                        #FDFBF7;
+        }
+
+        @keyframes pulseSoft {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.04); opacity: 1; }
+        }
+        .animate-pulse-soft {
+            animation: pulseSoft 3s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-amber-50/40 text-earth-900 font-sans antialiased selection:bg-gold-600 selection:text-white">
+
+    <!-- Falling Petals Canvas -->
+    <canvas id="petalCanvas"></canvas>
+
+    <!-- App Container -->
+    <div class="max-w-md mx-auto min-h-screen bg-ambient shadow-2xl relative border-x border-gold-600/10 overflow-hidden">
+
+        <!-- ================= 1. ANIMATED FLOWER WELCOME OVERLAY ================= -->
+        <div id="welcomeScreen" class="fixed inset-0 z-50 max-w-md mx-auto flex flex-col justify-between items-center text-center p-8 bg-gradient-to-b from-[#2C2523] via-[#3A322F] to-[#1F1918] text-cream-50 transition-all duration-1000">
+            
+            <div class="pt-8 space-y-2">
+                <span class="text-[10px] uppercase font-sans tracking-widest text-gold-400">Wedding Invitation</span>
+                <p class="font-script text-3xl text-gold-300">Welcome</p>
+            </div>
+
+            <div class="my-auto space-y-6 flex flex-col items-center">
+                <!-- Blooming Flower Animated Graphic -->
+                <div class="relative w-28 h-28 flex items-center justify-center animate-pulse-soft">
+                    <div class="absolute inset-0 rounded-full bg-gold-400/15 blur-xl"></div>
+                    <svg class="w-24 h-24 text-gold-400 opacity-90" viewBox="0 0 100 100" fill="none" stroke="currentColor">
+                        <path d="M50 15 C45 35 30 45 10 50 C30 55 45 65 50 85 C55 65 70 55 90 50 C70 45 55 35 50 15 Z" fill="rgba(212,175,55,0.18)" stroke-width="1.5"/>
+                        <path d="M50 25 C46 40 35 48 20 50 C35 52 46 60 50 75 C54 60 65 52 80 50 C65 48 54 40 50 25 Z" fill="rgba(212,175,55,0.28)" stroke-width="1.2"/>
+                        <circle cx="50" cy="50" r="4" fill="#D4AF37"/>
+                    </svg>
+                </div>
+
+                <div class="space-y-2">
+                    <h1 class="font-serif text-3xl text-cream-50 font-normal">Anand &amp; Sneka</h1>
+                    <p class="text-[10px] text-cream-200/80 tracking-widest uppercase font-semibold">13 DECEMBER 2026</p>
+                </div>
+
+                <p class="font-serif italic text-xs text-cream-200/80 max-w-xs leading-relaxed px-4">
+                    A Beautiful Beginning, Just a Scroll Away
+                </p>
+            </div>
+
+            <div class="pb-8 w-full max-w-xs">
+                <button onclick="openInvitation()" class="w-full py-3.5 px-6 rounded-full glass-card text-gold-300 font-sans tracking-widest text-xs uppercase hover:bg-gold-600 hover:text-white transition-all duration-300 border border-gold-400/40 shadow-xl flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-envelope-open text-xs"></i>
+                    <span>Open Invitation</span>
+                </button>
+            </div>
+        </div>
+
+
+        <!-- ================= 2. HERO SECTION ================= -->
+        <section id="hero" class="relative min-h-screen flex flex-col justify-between items-center text-center p-6 pt-8">
+            <svg class="floral-corner-tl" viewBox="0 0 100 100" fill="none" stroke="#8C6239" stroke-width="1.2">
+                <path d="M 10,10 C 30,10 40,20 55,5 S 80,10 90,20 C 65,25 55,40 50,60 C 45,40 35,25 10,10 Z" fill="#8C6239" fill-opacity="0.12"/>
+            </svg>
+            <svg class="floral-corner-tr" viewBox="0 0 100 100" fill="none" stroke="#8C6239" stroke-width="1.2">
+                <path d="M 10,10 C 30,10 40,20 55,5 S 80,10 90,20 C 65,25 55,40 50,60 C 45,40 35,25 10,10 Z" fill="#8C6239" fill-opacity="0.12"/>
+            </svg>
+
+            <div class="pt-2">
+                <p class="font-serif tracking-widest text-xs uppercase text-gold-700 font-semibold">Together Always</p>
+            </div>
+
+            <!-- Couple Photo Frame -->
+            <div class="w-full my-auto px-4">
+                <div class="relative rounded-t-full glass-card p-2.5 shadow-xl">
+                    <div class="rounded-t-full overflow-hidden aspect-[4/5] relative">
+                        <img src="assets/hero.jpg" onerror="this.src='https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80'" alt="Anand & Sneka" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-earth-900/60 via-transparent to-transparent"></div>
+                    </div>
+                </div>
+
+                <div class="mt-5 space-y-2">
+                    <h1 class="font-serif text-4xl text-earth-900 font-normal leading-tight">
+                        Anand <br>
+                        <span class="font-script text-3xl text-gold-600 font-normal my-1 inline-block">&amp;</span> <br>
+                        Sneka
+                    </h1>
+                    <div class="flex items-center justify-center space-x-3 text-gold-700 py-1">
+                        <span class="h-[1px] w-8 bg-gold-600/40"></span>
+                        <p class="font-sans tracking-widest text-[11px] uppercase font-bold">13 DECEMBER 2026</p>
+                        <span class="h-[1px] w-8 bg-gold-600/40"></span>
+                    </div>
+                    <p class="text-xs text-earth-800/80 italic max-w-xs mx-auto font-serif">
+                        A celebration of love, family, and new beginnings.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Save The Date Action -->
+            <div class="w-full pb-6 space-y-3">
+                <div class="flex flex-col sm:flex-row gap-2 justify-center max-w-xs mx-auto">
+                    <!-- Smooth Scroll to Details -->
+                    <a href="#wedding-details" class="w-full glass-pill bg-gold-600 hover:bg-gold-700 text-white font-medium py-3 px-4 rounded-full shadow-lg transition-all text-xs tracking-wider uppercase border border-white/40 flex items-center justify-center">
+                        <span>Save The Date</span>
+                        <i class="fa-solid fa-chevron-down ml-2 text-[10px]"></i>
+                    </a>
+                    <!-- Direct Google Calendar Link -->
+                    <button onclick="addToCalendar()" class="w-full glass-card hover:bg-white/80 text-earth-900 font-medium py-3 px-4 rounded-full transition-all text-xs tracking-wider uppercase flex items-center justify-center">
+                        <i class="fa-regular fa-calendar-plus mr-2 text-gold-600"></i>
+                        <span>Add to Calendar</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= 3. COUNTDOWN SECTION ================= -->
+        <section id="countdown" class="relative min-h-[75vh] flex flex-col justify-center items-center text-center p-8 border-t border-gold-600/10">
+            <div class="w-full max-w-xs space-y-8">
+                <div>
+                    <h2 class="font-serif text-2xl text-earth-900">Our Journey<br><span class="italic text-gold-700">Begins In</span></h2>
+                </div>
+
+                <!-- Timer Glass Grid -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="glass-card rounded-2xl p-4 text-center">
+                        <span id="days" class="block font-serif text-3xl font-bold text-gold-700">00</span>
+                        <span class="text-[10px] tracking-widest text-earth-800/70 uppercase font-semibold">Days</span>
+                    </div>
+                    <div class="glass-card rounded-2xl p-4 text-center">
+                        <span id="hours" class="block font-serif text-3xl font-bold text-gold-700">00</span>
+                        <span class="text-[10px] tracking-widest text-earth-800/70 uppercase font-semibold">Hours</span>
+                    </div>
+                    <div class="glass-card rounded-2xl p-4 text-center">
+                        <span id="minutes" class="block font-serif text-3xl font-bold text-gold-700">00</span>
+                        <span class="text-[10px] tracking-widest text-earth-800/70 uppercase font-semibold">Minutes</span>
+                    </div>
+                    <div class="glass-card rounded-2xl p-4 text-center">
+                        <span id="seconds" class="block font-serif text-3xl font-bold text-gold-700">00</span>
+                        <span class="text-[10px] tracking-widest text-earth-800/70 uppercase font-semibold">Seconds</span>
+                    </div>
+                </div>
+
+                <div class="pt-2 px-2">
+                    <p class="font-serif italic text-earth-800/90 text-xs leading-relaxed">
+                        "Good things take time, but the best things are worth the wait."
+                    </p>
+                    <div class="mt-3 text-gold-600">
+                        <i class="fa-solid fa-heart text-xs opacity-75"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= 4. WEDDING DETAILS ================= -->
+        <section id="wedding-details" class="relative min-h-screen flex flex-col justify-center items-center text-center p-8 border-t border-gold-600/10">
+            <svg class="floral-corner-tl" viewBox="0 0 100 100" fill="none" stroke="#8C6239" stroke-width="1.2">
+                <path d="M 10,10 C 30,10 40,20 55,5 S 80,10 90,20 C 65,25 55,40 50,60 C 45,40 35,25 10,10 Z" fill="#8C6239" fill-opacity="0.12"/>
+            </svg>
+
+            <div class="w-full max-w-xs space-y-6">
+                <div>
+                    <p class="font-sans text-[10px] uppercase tracking-widest text-gold-700 font-bold">You're Invited</p>
+                    <h2 class="font-serif text-2xl text-earth-900 mt-1">Wedding Ceremony</h2>
+                </div>
+
+                <!-- Temple Graphic Silhouette -->
+                <div class="py-2 flex justify-center">
+                    <svg class="w-24 h-24 text-gold-600/80" viewBox="0 0 100 100" fill="currentColor">
+                        <path d="M50 5 L40 20 L60 20 Z M43 20 L35 38 L65 38 L57 20 Z M37 38 L30 60 L70 60 L63 38 Z M32 60 L22 85 L78 85 L68 60 Z M20 85 L15 95 L85 95 L80 85 Z" fill-opacity="0.2" stroke="currentColor" stroke-width="1.5" />
+                        <rect x="44" y="70" width="12" height="15" rx="6" fill="currentColor" />
+                    </svg>
+                </div>
+
+                <!-- Venue Info -->
+                <div class="space-y-1">
+                    <h3 class="font-serif text-lg font-bold text-earth-900">Sri Kailasanathar Temple</h3>
+                    <p class="text-xs text-earth-800/80 tracking-wide font-medium">Rasipuram, Tamil Nadu</p>
+                </div>
+
+                <!-- Time & Date Glass Card -->
+                <div class="glass-card rounded-2xl p-4 space-y-1">
+                    <p class="font-sans text-[10px] uppercase text-gold-700 font-bold tracking-wider">Muhurtham</p>
+                    <p class="font-serif text-base font-semibold text-earth-900">03:00 AM - 05:30 AM</p>
+                    <p class="text-xs text-earth-800/80 font-medium">13 December 2026</p>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="space-y-3 pt-2">
+                    <a href="https://maps.google.com/?q=Sri+Kailasanathar+Temple+Rasipuram" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center w-full bg-gold-600 hover:bg-gold-700 text-white text-xs font-medium py-3 px-4 rounded-xl shadow-md transition-all">
+                        <i class="fa-solid fa-location-dot mr-2"></i> Open Temple Location in Maps
+                    </a>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= 5. EVENT TIMELINE ================= -->
+        <section id="timeline" class="relative min-h-screen flex flex-col justify-center items-center text-center p-8 border-t border-gold-600/10">
+            <div class="w-full max-w-xs space-y-8">
+                <div>
+                    <h2 class="font-serif text-2xl text-earth-900">The Celebration</h2>
+                    <p class="text-xs text-gold-700 font-serif italic mt-1">Join us in every moment</p>
+                </div>
+
+                <!-- Vertical Glass Timeline -->
+                <div class="relative pl-6 space-y-6 text-left before:absolute before:left-3 before:top-2 before:bottom-2 before:w-[2px] before:bg-gradient-to-b before:from-gold-600/20 before:via-gold-600 before:to-gold-600/20">
+                    
+                    <!-- ========================================================
+                         TIMELINE ITEM 1: RECEPTION
+                         ======================================================== -->
+                    <div class="relative group">
+                        <div class="absolute -left-[31px] top-4 w-6 h-6 rounded-full bg-cream-50 border-2 border-gold-600 flex items-center justify-center shadow-sm">
+                            <i class="fa-solid fa-glass-cheers text-[9px] text-gold-700"></i>
+                        </div>
+                        <div class="glass-card rounded-2xl p-4 space-y-2">
+                            <div>
+                                <h3 class="font-serif text-base font-semibold text-earth-900">Reception</h3>
+                                <p class="text-xs text-gold-700 font-semibold">12 December 2026</p>
+                                <p class="text-[11px] text-earth-800/70">Evening Celebration</p>
+                            </div>
+                            <!-- Reception Specific Google Maps Link -->
+                            <a href="https://maps.app.goo.gl/8fKqv7DredDju8Nm9" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-[10px] text-gold-700 bg-gold-600/10 hover:bg-gold-600/20 border border-gold-600/30 px-3 py-1.5 rounded-full font-medium transition-all">
+                                <i class="fa-solid fa-map-pin mr-1.5"></i> Reception Location Map
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- ========================================================
+                         TIMELINE ITEM 2: TEMPLE WEDDING
+                         ======================================================== -->
+                    <div class="relative group">
+                        <div class="absolute -left-[31px] top-4 w-6 h-6 rounded-full bg-cream-50 border-2 border-gold-600 flex items-center justify-center shadow-sm">
+                            <i class="fa-solid fa-ring text-[9px] text-gold-700"></i>
+                        </div>
+                        <div class="glass-card rounded-2xl p-4">
+                            <h3 class="font-serif text-base font-semibold text-earth-900">Temple Wedding</h3>
+                            <p class="text-xs text-gold-700 font-semibold">13 December 2026</p>
+                            <p class="text-[11px] text-earth-800/70 mt-1">03:00 AM - 05:30 AM</p>
+                        </div>
+                    </div>
+
+                    <!-- ========================================================
+                         TIMELINE ITEM 3: BLESSINGS & LUNCH
+                         ======================================================== -->
+                    <div class="relative group">
+                        <div class="absolute -left-[31px] top-4 w-6 h-6 rounded-full bg-cream-50 border-2 border-gold-600 flex items-center justify-center shadow-sm">
+                            <i class="fa-solid fa-utensils text-[9px] text-gold-700"></i>
+                        </div>
+                        <div class="glass-card rounded-2xl p-4">
+                            <h3 class="font-serif text-base font-semibold text-earth-900">Blessings &amp; Lunch</h3>
+                            <p class="text-xs text-gold-700 font-semibold">13 December 2026</p>
+                            <p class="text-[11px] text-earth-800/70 mt-1">Afternoon Feast</p>
+                        </div>
+                    </div>
+
+                    <!-- ========================================================
+                         TO ADD A NEW EVENT (e.g. Sangeet/Engagement), COPY & PASTE THIS TEMPLATE:
+                         
+                         <div class="relative group">
+                             <div class="absolute -left-[31px] top-4 w-6 h-6 rounded-full bg-cream-50 border-2 border-gold-600 flex items-center justify-center shadow-sm">
+                                 <i class="fa-solid fa-music text-[9px] text-gold-700"></i>
+                             </div>
+                             <div class="glass-card rounded-2xl p-4">
+                                 <h3 class="font-serif text-base font-semibold text-earth-900">Event Title</h3>
+                                 <p class="text-xs text-gold-700 font-semibold">Event Date</p>
+                                 <p class="text-[11px] text-earth-800/70 mt-1">Event Time</p>
+                             </div>
+                         </div>
+                         ======================================================== -->
+
+                </div>
+
+                <div class="pt-2 border-t border-gold-600/20">
+                    <p class="font-serif italic text-xs text-earth-800/80">
+                        Different moments. Same love. Forever ours.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= 6. OUR STORY ================= -->
+        <section id="story" class="relative min-h-screen flex flex-col justify-center items-center text-center p-8 border-t border-gold-600/10">
+            <svg class="floral-corner-tl" viewBox="0 0 100 100" fill="none" stroke="#8C6239" stroke-width="1.2">
+                <path d="M 10,10 C 30,10 40,20 55,5 S 80,10 90,20 C 65,25 55,40 50,60 C 45,40 35,25 10,10 Z" fill="#8C6239" fill-opacity="0.12"/>
+            </svg>
+
+            <div class="w-full max-w-xs space-y-6">
+                <div>
+                    <h2 class="font-serif text-2xl text-earth-900">Our Story</h2>
+                    <span class="block w-12 h-[1px] bg-gold-600 mx-auto mt-2 opacity-60"></span>
+                </div>
+
+                <p class="font-serif text-xs leading-relaxed text-earth-800/90 italic px-2">
+                    "Two families, one beautiful journey, and a lifetime ahead."
+                </p>
+
+                <!-- Bride & Groom Glass Card Grid -->
+                <div class="grid grid-cols-2 gap-3 pt-2">
+                    <div class="glass-card p-2 rounded-2xl text-center space-y-2">
+                        <div class="overflow-hidden rounded-xl aspect-[3/4]">
+                            <img src="assets/groom.jpg" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80'" alt="Anand (Groom)" class="w-full h-full object-cover">
+                        </div>
+                        <p class="font-serif text-sm font-semibold text-earth-900">Anand</p>
+                    </div>
+
+                    <div class="glass-card p-2 rounded-2xl text-center space-y-2">
+                        <div class="overflow-hidden rounded-xl aspect-[3/4]">
+                            <img src="assets/bride.jpg" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80'" alt="Sneka (Bride)" class="w-full h-full object-cover">
+                        </div>
+                        <p class="font-serif text-sm font-semibold text-earth-900">Sneka</p>
+                    </div>
+                </div>
+
+                <p class="font-sans text-[10px] uppercase tracking-widest text-gold-700 font-bold">
+                    Better Together
+                </p>
+            </div>
+        </section>
+
+
+        <!-- ================= 7. PHOTO GALLERY ================= -->
+        <section id="gallery" class="relative min-h-screen flex flex-col justify-center items-center text-center p-6 border-t border-gold-600/10">
+            <div class="w-full max-w-xs space-y-6">
+                <div>
+                    <h2 class="font-serif text-2xl text-earth-900">Gallery</h2>
+                    <p class="text-xs text-gold-700 font-serif italic mt-1">Captured Moments</p>
+                </div>
+
+                <!-- Filter Tabs -->
+                <div class="flex justify-center space-x-1.5 text-[10px]">
+                    <button onclick="filterGallery('all', this)" class="gallery-tab px-3 py-1.5 rounded-full glass-card bg-gold-600 text-white font-medium transition-all">All</button>
+                    <button onclick="filterGallery('moments', this)" class="gallery-tab px-3 py-1.5 rounded-full glass-card text-earth-800 hover:border-gold-600 transition-all">Moments</button>
+                    <button onclick="filterGallery('family', this)" class="gallery-tab px-3 py-1.5 rounded-full glass-card text-earth-800 hover:border-gold-600 transition-all">Family</button>
+                    <button onclick="filterGallery('love', this)" class="gallery-tab px-3 py-1.5 rounded-full glass-card text-earth-800 hover:border-gold-600 transition-all">Love</button>
+                </div>
+
+                <!-- Gallery Grid -->
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="gallery-item moments glass-card overflow-hidden rounded-xl p-1 shadow-sm aspect-square cursor-pointer" onclick="openModal('assets/gallery1.jpg', 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80')">
+                        <img src="assets/gallery1.jpg" onerror="this.src='https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80'" alt="Gallery 1" class="w-full h-full object-cover rounded-lg hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <div class="gallery-item love glass-card overflow-hidden rounded-xl p-1 shadow-sm aspect-square cursor-pointer" onclick="openModal('assets/gallery2.jpg', 'https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=800&q=80')">
+                        <img src="assets/gallery2.jpg" onerror="this.src='https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=600&q=80'" alt="Gallery 2" class="w-full h-full object-cover rounded-lg hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <div class="gallery-item family glass-card overflow-hidden rounded-xl p-1 shadow-sm aspect-square cursor-pointer" onclick="openModal('assets/gallery3.jpg', 'https://images.unsplash.com/photo-1544078751-58fee2d8a03b?auto=format&fit=crop&w=800&q=80')">
+                        <img src="assets/gallery3.jpg" onerror="this.src='https://images.unsplash.com/photo-1544078751-58fee2d8a03b?auto=format&fit=crop&w=600&q=80'" alt="Gallery 3" class="w-full h-full object-cover rounded-lg hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <div class="gallery-item moments love glass-card overflow-hidden rounded-xl p-1 shadow-sm aspect-square cursor-pointer" onclick="openModal('assets/gallery4.jpg', 'https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=800&q=80')">
+                        <img src="assets/gallery4.jpg" onerror="this.src='https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=600&q=80'" alt="Gallery 4" class="w-full h-full object-cover rounded-lg hover:scale-105 transition-transform duration-300">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Lightbox Modal -->
+        <div id="galleryModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4 max-w-md mx-auto" onclick="closeModal()">
+            <div class="relative w-full max-w-xs">
+                <img id="modalImg" src="" class="w-full rounded-2xl shadow-2xl border border-white/20">
+                <button class="absolute -top-10 right-0 text-white text-xl p-2">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        </div>
+
+
+        <!-- ================= 8. FOOTER ================= -->
+        <section id="footer" class="relative min-h-[70vh] flex flex-col justify-between items-center text-center p-8 bg-gradient-to-t from-earth-900 via-earth-900/95 to-earth-800 text-cream-50 border-t border-gold-600/20">
+            <div class="pt-8">
+                <p class="font-sans tracking-widest text-[10px] uppercase text-gold-400 font-bold">With Love</p>
+            </div>
+
+            <div class="my-auto space-y-6">
+                <h2 class="font-serif text-3xl text-cream-50 font-normal">
+                    Anand <br>
+                    <span class="font-script text-2xl text-gold-400 font-normal">&amp;</span> <br>
+                    Sneka
+                </h2>
+                <p class="font-serif italic text-xs text-cream-200/80">
+                    See you on our special day!
+                </p>
+
+                <div class="py-2 flex justify-center">
+                    <svg class="w-20 h-20 text-gold-400/60" viewBox="0 0 100 100" fill="currentColor">
+                        <path d="M50 5 L40 20 L60 20 Z M43 20 L35 38 L65 38 L57 20 Z M37 38 L30 60 L70 60 L63 38 Z M32 60 L22 85 L78 85 L68 60 Z M20 85 L15 95 L85 95 L80 85 Z" fill-opacity="0.3" stroke="currentColor" stroke-width="1.5" />
+                        <rect x="44" y="70" width="12" height="15" rx="6" fill="currentColor" />
+                    </svg>
+                </div>
+
+                <p class="font-serif italic text-xs text-cream-200/90 max-w-xs mx-auto leading-relaxed px-4">
+                    Sri Kailasanathar Temple, Rasipuram.
+                </p>
+            </div>
+
+            <div class="pb-4">
+                <p class="text-[10px] text-cream-300/60 tracking-wider font-sans">
+                    Made with <i class="fa-solid fa-heart text-gold-500 text-[9px] mx-0.5"></i> for Anand &amp; Sneka
+                </p>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- JavaScript Controls -->
+    <script>
+        // 1. Falling Petals Animation Logic
+        const canvas = document.getElementById('petalCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const petals = [];
+        const petalCount = 28;
+
+        for (let i = 0; i < petalCount; i++) {
+            petals.push({
+                x: Math.random() * window.innerWidth,
+                y: Math.random() * window.innerHeight,
+                size: Math.random() * 7 + 5,
+                speedY: Math.random() * 1.2 + 0.5,
+                speedX: Math.random() * 0.8 - 0.4,
+                angle: Math.random() * Math.PI * 2,
+                spin: Math.random() * 0.03 - 0.015,
+                color: Math.random() > 0.4 ? 'rgba(229, 193, 88, 0.45)' : 'rgba(212, 175, 55, 0.35)'
+            });
+        }
+
+        function drawPetal(p) {
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.angle);
+            ctx.fillStyle = p.color;
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.quadraticCurveTo(p.size / 2, -p.size, p.size, 0);
+            ctx.quadraticCurveTo(p.size / 2, p.size, 0, 0);
+            ctx.fill();
+            ctx.restore();
+        }
+
+        function animatePetals() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            petals.forEach(p => {
+                p.y += p.speedY;
+                p.x += Math.sin(p.y * 0.01) + p.speedX;
+                p.angle += p.spin;
+
+                if (p.y > canvas.height) {
+                    p.y = -10;
+                    p.x = Math.random() * canvas.width;
+                }
+                drawPetal(p);
+            });
+            requestAnimationFrame(animatePetals);
+        }
+        animatePetals();
+
+        // 2. Welcome Overlay Dismissal
+        function openInvitation() {
+            const welcomeScreen = document.getElementById('welcomeScreen');
+            welcomeScreen.style.opacity = '0';
+            setTimeout(() => {
+                welcomeScreen.style.display = 'none';
+            }, 1000);
+        }
+
+        // 3. Live Countdown Timer (Target: 13 Dec 2026 03:00 AM IST)
+        const targetDate = new Date("December 13, 2026 03:00:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                document.getElementById("days").innerText = days < 10 ? '0' + days : days;
+                document.getElementById("hours").innerText = hours < 10 ? '0' + hours : hours;
+                document.getElementById("minutes").innerText = minutes < 10 ? '0' + minutes : minutes;
+                document.getElementById("seconds").innerText = seconds < 10 ? '0' + seconds : seconds;
+            } else {
+                document.getElementById("days").innerText = "00";
+                document.getElementById("hours").innerText = "00";
+                document.getElementById("minutes").innerText = "00";
+                document.getElementById("seconds").innerText = "00";
+            }
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // 4. Save To Calendar Link Generator
+        function addToCalendar() {
+            const title = encodeURIComponent("Anand & Sneka's Wedding Ceremony");
+            const details = encodeURIComponent("Muhurtham: Sri Kailasanathar Temple, Rasipuram");
+            const location = encodeURIComponent("Sri Kailasanathar Temple, Rasipuram, Tamil Nadu");
+            const start = "20261213T030000";
+            const end = "20261213T053000";
+            
+            const googleCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${start}/${end}&details=${details}&location=${location}`;
+            window.open(googleCalUrl, '_blank');
+        }
+
+        // 5. Gallery Filter Controls
+        function filterGallery(category, el) {
+            const tabs = document.querySelectorAll('.gallery-tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('bg-gold-600', 'text-white');
+                tab.classList.add('text-earth-800');
+            });
+            el.classList.add('bg-gold-600', 'text-white');
+
+            const items = document.querySelectorAll('.gallery-item');
+            items.forEach(item => {
+                if (category === 'all' || item.classList.contains(category)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // 6. Lightbox Viewer
+        function openModal(primarySrc, fallbackSrc) {
+            const modal = document.getElementById('galleryModal');
+            const modalImg = document.getElementById('modalImg');
+            modalImg.src = primarySrc;
+            modalImg.onerror = function() {
+                this.src = fallbackSrc;
+            };
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('galleryModal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
